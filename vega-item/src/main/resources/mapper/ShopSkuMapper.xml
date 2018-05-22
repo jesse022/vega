@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ~ Copyright (c) 2016 杭州端点网络科技有限公司 -->
+
+<mapper namespace="ShopSku">
+    <resultMap id="ShopSkuMap" type="ShopSku">
+        <id column="id" property="id"/>
+        <result column="shop_id" property="shopId"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="item_id" property="itemId"/>
+        <result column="sku_id" property="skuId"/>
+        <result column="status" property="status"/>
+        <result column="price" property="price"/>
+        <result column="extra_price_json" property="extraPriceJson"/>
+        <result column="stock_type" property="stockType"/>
+        <result column="stock_quantity" property="stockQuantity"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="tb">vega_shop_skus</sql>
+
+    <sql id="cols_all">
+        id,<include refid="cols_exclude_id"/>
+    </sql>
+
+    <sql id="cols_exclude_id">
+        shop_id,category_id,item_id,sku_id,`status`,price,extra_price_json,stock_type,stock_quantity,created_at,updated_at
+    </sql>
+
+    <sql id="vals">
+        #{shopId},#{categoryId},#{itemId},#{skuId},#{status},#{price},#{extraPriceJson},#{stockType},#{stockQuantity},now(),now()
+    </sql>
+
+    <insert id="create" parameterType="ShopSku" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO<include refid="tb"/>(<include refid="cols_exclude_id"/>) VALUES(<include refid="vals"/>)
+    </insert>
+
+    <insert id="creates" parameterType="list">
+        INSERT INTO
+        <include refid="tb"/>
+        (<include refid="cols_exclude_id"/>)
+        VALUES
+        <foreach collection="list" item="i" index="index" separator=",">
+            (
+            #{i.shopId},#{i.categoryId},#{i.itemId},#{i.skuId},#{i.status},#{i.price},
+            #{i.extraPriceJson},#{i.stockType},#{i.stockQuantity},now(),now()
+            )
+        </foreach>
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        delete from <include refid="tb"/>
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteByShopIdAndSkuId" parameterType="map">
+        delete from <include refid="tb"/>
+        where shop_id = #{shopId} and sku_id = #{skuId}
+    </delete>
+
+    <update id="update" parameterType="ShopSku">
+        UPDATE <include refid="tb"/>
+        <set>
+            <if test="price != null">price = #{price},</if>
+            <if test="extraPriceJson != null">extra_price_json = #{extraPriceJson},</if>
+            <if test="stockType != null">stock_type = #{stockType},</if>
+            <if test="stockQuantity != null">stock_quantity = #{stockQuantity},</if>
+            updated_at = now()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" parameterType="long" resultMap="ShopSkuMap">
+        select id,<include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        where id = #{id}
+    </select>
+
+    <select id="findByIds" parameterType="list" resultMap="ShopSkuMap">
+        select id,<include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        where id in
+        <foreach collection="list" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findByShopIdAndSkuIds" parameterType="map" resultMap="ShopSkuMap">
+        select id,<include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        where shop_id=#{shopId} and sku_id in
+        <foreach collection="skuIds" open="(" separator="," close=")" item="skuId">
+            #{skuId}
+        </foreach>
+    </select>
+
+    <select id="findByShopIdAndItemId" parameterType="map" resultMap="ShopSkuMap">
+        select id,<include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        where shop_id=#{shopId} and item_id = #{itemId}
+    </select>
+
+    <select id="findByShopIdAndSkuId" parameterType="map" resultMap="ShopSkuMap">
+        select id,<include refid="cols_exclude_id"/>
+        from
+        <include refid="tb"/>
+        where shop_id = #{shopId} and sku_id=#{skuId}
+    </select>
+
+    <update id="updateStockQuantity" parameterType="map">
+        UPDATE <include refid="tb"/>
+        set stock_quantity = stock_quantity+ #{delta},updated_at = now()
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateStockById" parameterType="map">
+        UPDATE <include refid="tb"/>
+        <set>
+            <if test="stockQuantity != null">stock_quantity = #{stockQuantity},</if>
+            updated_at = now()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateStatus" parameterType="map">
+        UPDATE <include refid="tb"/>
+        set `status` = #{status},updated_at = now()
+        WHERE id = #{id}
+    </update>
+
+    <update id="batchUpdateByShopIdAndSkuId"  parameterType="list">
+        update
+        <include refid="tb"/>
+        <set>
+            stock_quantity = (
+            CASE
+            <foreach collection="list" open="" separator="" close="" item="shopSku">
+                WHEN shop_id = #{shopSku.shopId} and sku_id = #{shopSku.skuId} THEN #{shopSku.stockQuantity}
+            </foreach>
+            END),
+            price = (
+            CASE
+            <foreach collection="list" open="" separator="" close="" item="shopSku">
+                WHEN shop_id = #{shopSku.shopId} and sku_id = #{shopSku.skuId} THEN #{shopSku.price}
+            </foreach>
+            END),
+
+            updated_at=now()
+        </set>
+        where shop_id in
+        <foreach collection="list" open="(" separator="," close=")" item="shopSku">
+            #{shopSku.shopId}
+        </foreach> and sku_id in
+        <foreach collection="list" open="(" separator="," close=")" item="shopSku">
+            #{shopSku.skuId}
+        </foreach>
+
+
+    </update>
+
+    <sql id="criteria">
+        <if test="id != null">id = #{id}</if>
+        <if test="shopId != null">and shop_id = #{shopId}</if>
+        <if test="categoryId != null">and category_id = #{categoryId}</if>
+        <if test="itemId != null">and item_id = #{itemId}</if>
+        <if test="skuId != null">and sku_id = #{skuId}</if>
+        <if test="status != null">and status = #{status}</if>
+    </sql>
+
+    <select id="count" parameterType="map" resultType="long">
+        select count(1) from <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+    </select>
+
+    <select id="paging" parameterType="map" resultMap="ShopSkuMap">
+        select id,<include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="findByShopIdAndItemIds" parameterType="map" resultMap="ShopSkuMap">
+        select id,<include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        where shop_id=#{shopId} and item_id in
+        <foreach collection="itemIds" open="(" separator="," close=")" item="itemId">
+            #{itemId}
+        </foreach>
+    </select>
+
+</mapper>

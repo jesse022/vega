@@ -1,0 +1,91 @@
+{
+  "item": {
+    "_all": {
+      "enabled": false
+    },
+    "properties": {
+      "id": {
+        "type": "long"
+      },
+      "name": {
+        "type": "text",
+        "analyzer": "ngram_tokenizer_analyzer",
+        "search_analyzer": "ngram_tokenizer_analyzer",
+        "index_options": "offsets",
+        "fields": {
+          "suggest": {
+            "type": "completion"
+          },
+          "raw": {
+            "type": "keyword",
+            "index": false
+          }
+        }
+      },
+      "displayName": {
+        "type": "text",
+        "index": false
+      },
+      "itemCode": {
+        "type": "keyword"
+      },
+      "shopId": {
+        "type": "long"
+      },
+      "spuId": {
+        "type": "long"
+      },
+      "shopName": {
+        "type": "keyword",
+        "index": false
+      },
+      "brandId": {
+        "type": "long"
+      },
+      "brandName": {
+        "type": "keyword"
+      },
+      "brandLogo": {
+        "type": "keyword",
+        "index": false
+      },
+      "mainImage": {
+        "type": "keyword",
+        "index": false
+      },
+      "price": {
+        "type": "integer"
+      },
+      "stockQuantity": {
+        "type": "integer"
+      },
+      "saleQuantity": {
+        "type": "integer"
+      },
+      "status": {
+        "type": "integer"
+      },
+      "specification":{
+        "type": "keyword"
+      },
+      "type": {
+        "type": "integer"
+      },
+      "categoryIds":{
+        "type": "integer"
+      },
+      "attributes": {
+        "type": "keyword"
+      },
+      "shopCategoryIds":{
+        "type": "integer"
+      },
+      "regionIds": {
+        "type": "integer"
+      },
+      "updatedAt": {
+        "type": "date"
+      }
+    }
+  }
+}

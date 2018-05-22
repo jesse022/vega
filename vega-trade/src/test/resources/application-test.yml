@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test;MODE=MySQL
+
+mybatis:
+  mapperLocations:  classpath:mapper/*Mapper.xml
+  typeAliasesPackage: com.sanlux.trade.model,com.sanlux.trade.settle.model
+
+rpc.mode: false

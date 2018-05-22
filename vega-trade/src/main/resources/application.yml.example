@@ -1,0 +1,22 @@
+logging:
+  file: ${user.home}/logs/vega/trade.log
+  level.*: INFO
+  level.io.terminus: DEBUG
+
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: io.terminus.parana.(order|cart|express|promotion|delivery|settle).model
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/parana-core?useUnicode=true&characterEncoding=UTF8
+    username: root
+    password: anywhere
+  profiles:
+    include: actuator
+
+rpc.mode: true
+
+rpc.dubbo:
+  module: vega-trade

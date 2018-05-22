@@ -1,0 +1,82 @@
+spring.profiles.active: dev
+
+mybatis:
+  mapperLocations:  classpath*:mapper/*Mapper.xml
+  type-aliases-package: >
+    io.terminus.parana.(item|category|brand|shop|spu|user|order|cart|express|promotion|delivery|settle|article).model,
+    io.terminus.parana.user.address.model,
+    com.sanlux.(trade|user|item|category|shop).model,com.sanlux.trade.settle.model
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test;MODE=MySQL
+
+
+search:
+  host: localhost
+  port: 9200
+
+item.search:
+  index-name: items
+  index-type: item
+  mapping-path: item_mapping.json
+  full-dump-range: 3
+  batch-size: 100
+
+shop.search:
+  index-name: shops
+  index-type: shop
+  mapping-path: shop_mapping.json
+  full-dump-range: 3000
+  batch-size: 100
+
+#curator:
+#  zk.host: localhost
+#  zk.port: 2181
+#  leader.path: /jobleader
+
+express.100.key: f93c3f9e5a89fb22
+
+session:
+  cookie-domain:
+  cookie-context-path: /
+  cookie-name: msid
+  cookie-max-age: 1800
+  source: redis
+  serialize-type: json
+  redis-host: 127.0.0.1
+  redis-port: 6379
+  redis-index: 1
+  redis-cluster: false
+  redis-test-on-borrow: true
+  redis-max-total: 10
+  redis-max-idle: 0
+  redis-prefix: afsession
+
+#支付超时时间
+order.auto.cancel.in.minutes: 5
+
+#确认收货超时时间  30天:60*24*30
+order.auto.confirm.in.minutes: 43200
+
+#结算开关 是否生成结算数据
+settle.enable: false
+settle.listener.enable: false
+trade.listener.enable: false
+rpc.mode: false
+
+pay:
+  debug: true
+  channel:
+    credit-pay: enable
+
+credit-pay:
+  pid: pid
+  key: key
+  account: account
+  notifyUrl: http://sanlux.dithub.com/api/vega/order/paid
+  returnUrl: http://sanlux.dithub.com/buyer/pay-success
+  refundNotifyUrl: http://sanlux.dithub.com/api/vega/refund/notify
+  gateway: http://sanlux.dithub.com/api/vega/credit/pay
+  refundGateway: http://sanlux.dithub.com/api/vega/credit/refund

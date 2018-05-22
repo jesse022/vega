@@ -1,0 +1,8 @@
+session:
+  redis-auth: ${REDIS_PASSWORD}
+
+redis:
+  auth: ${REDIS_PASSWORD}
+spring:
+  profiles:
+    include: actuator

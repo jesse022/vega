@@ -1,0 +1,17 @@
+logging:
+  level.io.terminus: ${LOG_LEVEL_TERMINUS:INFO}
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=UTF8
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+  profiles:
+    include: actuator
+
+rpc.mode: true
+
+rpc.dubbo:
+  registry-address: ${ZK_HOST}:${ZK_PORT}
+  port: ${TERMINUS_PORT}

@@ -1,0 +1,7 @@
+redis:
+  auth: ${REDIS_PASSWORD}
+
+spring:
+  profiles:
+    include: actuator
+

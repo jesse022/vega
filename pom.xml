@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.terminus.vega</groupId>
+    <artifactId>vega</artifactId>
+    <version>1.3.RELEASE</version>
+    <modules>
+        <module>vega-web-common</module>
+        <module>vega-web</module>
+        <module>vega-admin</module>
+        <module>vega-item-api</module>
+        <module>vega-item</module>
+        <module>vega-user-api</module>
+        <module>vega-user</module>
+        <module>vega-trade</module>
+        <module>vega-trade-api</module>
+        <module>vega-common</module>
+        <module>vega-pay</module>
+        <module>integration-test</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <name>vega</name>
+    <description>Vega Project</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <jackson.version>2.7.3</jackson.version>
+        <parana.version>4.8.30.RELEASE</parana.version>
+        <parana-extra.version>4.3.BUILD-SNAPSHOT</parana-extra.version>
+        <terminus-lib.version>1.2.1.RELEASE</terminus-lib.version>
+        <terminus-pay.version>1.4.8.RELEASE</terminus-pay.version>
+        <terminus-msg.version>1.4.7.RELEASE</terminus-msg.version>
+        <terminus-boot.version>1.6.0.RELEASE</terminus-boot.version>
+        <spring-boot.version>1.5.3.RELEASE</spring-boot.version>
+        <terminus-search.version>3.1.RELEASE</terminus-search.version>
+        <parana.repo.version>1.4.5-SNAPSHOT</parana.repo.version>
+        <terminus-actuator.version>1.1.8-SNAPSHOT</terminus-actuator.version>
+        <terminus-boot-mybatis.version>1.5.1.RELEASE</terminus-boot-mybatis.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>2.9.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.boot.rpc</groupId>
+                <artifactId>rpc-dubbo</artifactId>
+                <version>1.0.5.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.boot.rpc</groupId>
+                <artifactId>rpc-common</artifactId>
+                <version>1.0.5.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>2.5.4.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.boot</groupId>
+                <artifactId>spring-boot-starter-mybatis</artifactId>
+                <version>${terminus-boot-mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.boot</groupId>
+                <artifactId>terminus-spring-boot-starter-redis</artifactId>
+                <version>${terminus-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus</groupId>
+                <artifactId>terminus-common</artifactId>
+                <version>2.0.3.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.boot</groupId>
+                <artifactId>terminus-spring-boot-starter-session</artifactId>
+                <version>${terminus-boot.version}</version>
+            </dependency>
+            <!-- Terminus Search -->
+            <dependency>
+                <groupId>io.terminus.search</groupId>
+                <artifactId>search-api</artifactId>
+                <version>${terminus-search.version}</version>
+            </dependency>
+            <!-- Parana Core jars -->
+            <dependency>
+                <groupId>io.terminus.parana</groupId>
+                <artifactId>parana-common</artifactId>
+                <version>${parana.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.parana</groupId>
+                <artifactId>parana-user-api</artifactId>
+                <version>${parana.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.parana</groupId>
+                <artifactId>parana-item-api</artifactId>
+                <version>${parana.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.parana</groupId>
+                <artifactId>parana-trade-api</artifactId>
+                <version>${parana.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.thoughtworks.xstream</groupId>
+                <artifactId>xstream</artifactId>
+                <version>1.4.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.kevinsawicki</groupId>
+                <artifactId>http-request</artifactId>
+                <version>6.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.pay</groupId>
+                <artifactId>terminus-pay-api</artifactId>
+                <version>${terminus-pay.version}</version>
+            </dependency>
+
+            <!-- 支付宝PC -->
+            <dependency>
+                <groupId>io.terminus.pay</groupId>
+                <artifactId>terminus-pay-alipay-pc</artifactId>
+                <version>${terminus-pay.version}</version>
+            </dependency>
+            <!-- 微信扫码支付 -->
+            <dependency>
+                <groupId>io.terminus.pay</groupId>
+                <artifactId>terminus-pay-wechatpay-qr</artifactId>
+                <version>${terminus-pay.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.terminus.pay</groupId>
+                <artifactId>terminus-pay-alipay-app</artifactId>
+                <version>${terminus-pay.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.terminus.pay</groupId>
+                <artifactId>terminus-pay-wechatpay-app</artifactId>
+                <version>${terminus-pay.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.pay</groupId>
+                <artifactId>terminus-pay-wechatpay-jsapi</artifactId>
+                <version>${terminus-pay.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.pay</groupId>
+                <artifactId>terminus-pay-mockpay</artifactId>
+                <version>${terminus-pay.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.pay</groupId>
+                <artifactId>terminus-pay-alipay-wap</artifactId>
+                <version>${terminus-pay.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.terminus.pay</groupId>
+                <artifactId>terminus-pay-web-front</artifactId>
+                <version>${terminus-pay.version}</version>
+            </dependency>
+
+
+            <!-- sms -->
+            <dependency>
+                <groupId>io.terminus.msg</groupId>
+                <artifactId>terminus-msg-sms-alidayu</artifactId>
+                <version>${terminus-msg.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.msg</groupId>
+                <artifactId>terminus-msg-light</artifactId>
+                <version>${terminus-msg.version}</version>
+            </dependency>
+            <!-- 仓储 -->
+            <dependency>
+                <groupId>io.terminus.parana</groupId>
+                <artifactId>parana-repo</artifactId>
+                <version>${parana.repo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.parana</groupId>
+                <artifactId>parana-repo-api</artifactId>
+                <version>${parana.repo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.parana</groupId>
+                <artifactId>parana-repo-web</artifactId>
+                <version>${parana.repo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.parana</groupId>
+                <artifactId>parana-repo-job</artifactId>
+                <version>${parana.repo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.actuator</groupId>
+                <artifactId>terminus-actuator-starter-web</artifactId>
+                <version>${terminus-actuator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.terminus.actuator</groupId>
+                <artifactId>terminus-actuator-starter-service</artifactId>
+                <version>${terminus-actuator.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>terminus</id>
+            <name>terminus release repository</name>
+            <url>http://repo.terminus.io/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>terminus</id>
+            <name>terminus snapshot repository</name>
+            <url>http://repo.terminus.io/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>*.example</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

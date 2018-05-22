@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>vega</artifactId>
+        <groupId>io.terminus.vega</groupId>
+        <version>1.3.RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>vega-admin</artifactId>
+
+    <dependencies>
+        <!-- galaxy -->
+        <dependency>
+            <groupId>io.terminus.vega</groupId>
+            <artifactId>vega-web-common</artifactId>
+            <version>1.3.RELEASE</version>
+        </dependency>
+        <!-- parana base -->
+        <dependency>
+            <groupId>io.terminus.vega</groupId>
+            <artifactId>vega-item-api</artifactId>
+            <version>1.3.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.parana</groupId>
+            <artifactId>parana-user-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.parana</groupId>
+            <artifactId>parana-trade-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.parana</groupId>
+            <artifactId>parana-web-admin</artifactId>
+            <version>${parana.version}</version>
+        </dependency>
+
+        <!-- parana extra -->
+        <dependency>
+            <groupId>io.terminus.parana</groupId>
+            <artifactId>parana-article-api</artifactId>
+            <version>${parana-extra.version}</version>
+        </dependency>
+
+        <!-- springboot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>
+
+        <!-- session -->
+        <dependency>
+            <groupId>io.terminus.boot</groupId>
+            <artifactId>terminus-spring-boot-starter-session</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.boot.rpc</groupId>
+            <artifactId>rpc-dubbo</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.terminus.parana</groupId>
+            <artifactId>parana-repo-job</artifactId>
+        </dependency>
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.3.5.RELEASE</version>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

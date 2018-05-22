@@ -1,0 +1,36 @@
+logging:
+  file: ${user.home}/logs/vega/trade.log
+  level.*: INFO
+  level.io.terminus: DEBUG
+
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: >
+    io.terminus.parana.(order|trade|cart|express|promotion|delivery|settle).model,
+    com.sanlux.trade.model,
+    com.sanlux.store.model,
+    com.sanlux.trade.settle.model
+
+mapper:
+  basePackage: io.terminus.parana.store.impl.dao
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/vega?useUnicode=true&characterEncoding=UTF8
+    username: root
+    password: anywhere
+
+rpc.mode: true
+settle.enable: false
+
+rpc.dubbo:
+  module: vega-trade
+
+#支付超时时间 4天:60*24*4 = 5760
+order.auto.cancel.in.minutes: 5760
+
+#确认收货超时时间  30天:60*24*30
+order.auto.confirm.in.minutes: 43200
+
+settle.service.enable: false

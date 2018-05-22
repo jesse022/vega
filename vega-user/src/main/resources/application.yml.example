@@ -1,0 +1,32 @@
+logging:
+  file: ${user.home}/logs/vega/user.log
+  level.*: INFO
+  level.io.terminus: DEBUG
+
+mybatis:
+  mapperLocations:  classpath*:mapper/*Mapper.xml
+  typeAliasesPackage: >
+    io.terminus.parana.(user|file|article|user.address).model,
+    com.sanlux.user.model
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/parana-core?useUnicode=true&characterEncoding=UTF8
+    username: root
+    password: anywhere
+  profiles:
+    include: actuator
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  max-total: 10
+  max-idle: 2
+  test-on-borrow: true
+
+
+rpc.mode: true
+
+rpc.dubbo:
+  module: vega-user

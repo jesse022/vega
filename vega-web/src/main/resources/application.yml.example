@@ -1,0 +1,49 @@
+logging:
+  file: ${user.home}/logs/vega/web.log
+  level.*: INFO
+  level.io.terminus: DEBUG
+
+server:
+  context-path: /
+  port: 8080
+spring:
+  profiles:
+    include: actuator
+
+session:
+  cookie-domain: vega.dev
+  cookie-context-path: /
+  cookie-name: msid
+  cookie-max-age: 1800
+  source: redis
+  serialize-type: json
+  redis-host: 127.0.0.1
+  redis-port: 6379
+  redis-index: 0
+  redis-cluster: false
+  redis-test-on-borrow: true
+  redis-max-total: 10
+  redis-max-idle: 0
+  redis-prefix: afsession
+
+rpc.mode: true
+
+rpc.dubbo:
+  name: galaxy-web
+  registry: zookeeper://121.40.120.209:2181
+  port: -1
+  timeout: 10000
+  threads: 100
+  heartBeats: 10000
+  module: vega-web
+
+express.100.key: ~~removed~~~
+
+msg:
+  alisms:
+    app-key: ~~removed~~~
+    app-secret: ~~removed~~~
+
+curator:
+  zk.host: localhost
+  zk.port: 2181

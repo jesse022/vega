@@ -1,0 +1,75 @@
+# 不需要登陆的接口
+- tree: not_login
+  next:
+    # 首页
+    - key: page_index
+      get: /(index)?
+    # 登陆页面
+    - key: page_login
+      get: /login
+    # 登陆请求
+    - key: api_login
+      post: /api/user/login
+
+# 所有登陆用户的接口
+- tree: logined
+  next:
+    # 获取当前登陆用户数据
+    - key: api_get_user
+      get: /api/user
+    # 登出
+    - key: api_logout
+      get: /api/user/logout
+
+# 卖家发布/更新商品组件
+- tree: comp_item_publish
+  mode:
+    - a
+    - b
+  next:
+    - key: page_publish
+      get: /item_publish
+      next:
+        - switch:
+            a:
+              - key: api_create
+                post: /api/item
+            b:
+              - key: api_update
+                put: /api/item/\d+
+
+# 卖家侧边栏组件
+- tree: seller_sidebar
+  next:
+    - key: item_mng
+      virtual: true
+      next:
+        - link: comp_item_publish $ a
+        - link: comp_item_publish $ b
+
+# 全局树
+- tree: GLOBAL
+  expose: true
+  next:
+    - ref: not_login
+
+# 登陆用户树
+- tree: LOGIN
+  expose: true
+  next:
+    - ref: logined
+
+# 卖家树
+- tree: SELLER
+  expose: true
+  next:
+    - ref: GLOBAL
+    - ref: LOGIN
+    - link: comp_item_publish $ a
+
+# 买家树
+- tree: BUYER
+  expose: true
+  next:
+    - ref: GLOBAL
+    - ref: LOGIN

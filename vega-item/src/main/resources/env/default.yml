@@ -1,0 +1,45 @@
+logging:
+  file: ${user.home}/logs/vega/item.log
+  level.*: INFO
+  level.io.terminus: DEBUG
+
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: >
+    io.terminus.parana.(item|shop|category|spu|brand|delivery).model,
+    com.sanlux.(category|item|shop|youyuncai).model
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/vega?useUnicode=true&characterEncoding=UTF8
+    username: root
+    password: anywhere
+
+item:
+  search:
+    index-name: items
+    index-type: item
+    mapping-path: item_mapping.json
+    full-dump-range: 3
+    batch-size: 100
+    attributes-size: 1000
+    brand-id-size: 20
+    category-id-size: 200
+
+shop.search:
+  index-name: shops
+  index-type: shop
+  mapping-path: shop_mapping.json
+  full-dump-range: 3
+  batch-size: 100
+
+search:
+  host: 10.25.254.96
+  port: 9200
+
+
+rpc.mode: true
+
+rpc.dubbo:
+  module: vega-item

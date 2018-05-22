@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test;MODE=MySQL
+
+mybatis:
+  mapperLocations:  classpath*:mapper/*Mapper.xml
+  typeAliasesPackage: >
+    io.terminus.parana.item.model,
+    io.terminus.parana.category.model,
+    io.terminus.parana.brand.model,
+    io.terminus.parana.spu.model,
+    io.terminus.parana.shop.model,
+    io.terminus.parana.delivery.model,
+    com.sanlux.(category|item|shop).model
+
+rpc.mode: false

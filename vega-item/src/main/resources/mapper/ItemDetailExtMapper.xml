@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ~ Copyright (c) 2016 杭州端点网络科技有限公司 -->
+
+<mapper namespace="ItemDetail">
+
+
+    <update id="batchUpdateItemDetail"  parameterType="list">
+        update
+        <include refid="tb"/>
+        <set>
+            detail = (
+            CASE
+            <foreach collection="list" open="" separator="" close="" item="itemDetail">
+                WHEN item_id = #{itemDetail.itemId} THEN #{itemDetail.detail}
+            </foreach>
+            END),
+
+            updated_at=now()
+        </set>
+        where item_id in
+        <foreach collection="list" open="(" separator="," close=")" item="itemDetail">
+            #{itemDetail.itemId}
+        </foreach>
+
+
+    </update>
+
+    <select id="findItemDetailsByItemIds" parameterType="list" resultMap="ItemDetailMap">
+        select <include refid="cols"/>
+        from <include refid="tb"/>
+        where item_id in
+        <foreach collection="list" open="(" separator="," close=")"
+                 item="item">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

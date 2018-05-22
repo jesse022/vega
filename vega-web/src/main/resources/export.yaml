@@ -1,0 +1,246 @@
+export.tables:
+  SettleOrderDetail:
+    display: 订单明细报表
+    columns:
+      - name: id
+        display: ID
+        width: 1800
+      - name: checkAt
+        display: 对账时间
+        width: 1800
+        format: isoDate
+      - name: paidAt
+        display: 支付时间
+        width: 7200
+        format: isoDate
+      - name: orderId
+        display: 订单ID
+        width: 1800
+      - name: sellerId
+        display: 店铺ID
+        width: 1800
+      - name: originFee
+        display: 应收货款
+        width: 1800
+        format: price
+      - name: sellerDiscount
+        display: 商家优惠
+        width: 1800
+        format: price
+      - name: platformDiscount
+        display: 平台优惠
+        width: 1800
+        format: price
+      - name: shipFee
+        display: 运费
+        width: 1800
+        format: price
+      - name: shipFeeDiscount
+        display: 运费优惠
+        width: 1800
+        format: price
+      - name: diffFee
+        display: 差价
+        width: 1800
+      - name: actualPayFee
+        display: 实收货款
+        width: 1800
+        format: price
+      - name: gatewayCommission
+        display: 支付平台佣金
+        width: 1800
+        format: price
+      - name: platformCommission
+        display: 平台佣金
+        width: 1800
+        format: price
+      - name: sellerReceivableFee
+        display: 商家应收
+        width: 1800
+        format: price
+  SettleRefundOrderDetail:
+    display: 退款单明细报表
+    columns:
+      - name: id
+        display: ID
+        width: 1800
+      - name: checkAt
+        display: 对账时间
+        width: 1800
+        format: isoDate
+      - name: refundAt
+        display: 退款完成时间
+        width: 7200
+        format: isoDate
+      - name: refundId
+        display: 退款单号
+        width: 1800
+      - name: orderId
+        display: 订单号
+        width: 1800
+      - name: sellerId
+        display: 店铺ID
+        width: 1800
+      - name: originFee
+        display: 应退货款
+        width: 1800
+        format: price
+      - name: sellerDiscount
+        display: 商家优惠
+        width: 1800
+        format: price
+      - name: platformDiscount
+        display: 平台优惠
+        width: 1800
+        format: price
+      - name: shipFee
+        display: 应退运费
+        width: 1800
+        format: price
+      - name: shipFeeDiscount
+        display: 运费优惠
+        width: 1800
+        format: price
+      - name: diffFee
+        display: 差价
+        width: 1800
+      - name: actualRefundFee
+        display: 实退货款
+        width: 1800
+        format: price
+      - name: gatewayCommission
+        display: 应退支付平台佣金
+        width: 1800
+        format: price
+      - name: platformCommission
+        display: 应退平台佣金
+        width: 1800
+        format: price
+      - name: sellerDeductFee
+        display: 应扣商家
+        width: 1800
+        format: price
+  SellerTradeDailySummary:
+    display: 商家日汇总报表
+    columns:
+      - name: id
+        display: ID
+        width: 1800
+      - name: sumAt
+        display: 汇总日期
+        width: 1800
+        format: isoDate
+      - name: sellerId
+        display: 店铺ID
+        width: 1800
+      - name: sellerName
+        display: 店铺名称
+        width: 1800
+      - name: orderCount
+        display: 订单数量
+        width: 1800
+      - name: refundOrderCount
+        display: 退款笔数
+        width: 1800
+      - name: originFee
+        display: 应收货款
+        width: 1800
+        format: price
+      - name: sellerDiscount
+        display: 商家优惠
+        width: 1800
+        format: price
+      - name: platformDiscount
+        display: 平台优惠
+        width: 1800
+        format: price
+      - name: refundFee
+        display: 交易总退款
+        width: 1800
+        format: price
+      - name: shipFee
+        display: 运费
+        width: 1800
+        format: price
+      - name: shipFeeDiscount
+        display: 运费优惠
+        width: 1800
+        format: price
+      - name: diffFee
+        display: 差价
+        width: 1800
+      - name: actualPayFee
+        display: 实收货款
+        width: 1800
+        format: price
+      - name: gatewayCommission
+        display: 支付平台佣金
+        width: 1800
+        format: price
+      - name: platformCommission
+        display: 平台佣金
+        width: 1800
+        format: price
+      - name: sellerReceivableFee
+        display: 商家应收
+        width: 1800
+        format: price
+  PlatformTradeDailySummary:
+    display: 订单日汇总报表
+    columns:
+      - name: id
+        display: ID
+        width: 1800
+      - name: sumAt
+        display: 汇总日期
+        width: 1800
+        format: isoDate
+      - name: orderCount
+        display: 订单数量
+        width: 1800
+      - name: refundOrderCount
+        display: 退款笔数
+        width: 1800
+      - name: originFee
+        display: 应收货款
+        width: 1800
+        format: price
+      - name: sellerDiscount
+        display: 商家优惠
+        width: 1800
+        format: price
+      - name: platformDiscount
+        display: 平台优惠
+        width: 1800
+        format: price
+      - name: refundFee
+        display: 交易总退款
+        width: 1800
+        format: price
+      - name: shipFee
+        display: 运费
+        width: 1800
+        format: price
+      - name: shipFeeDiscount
+        display: 运费优惠
+        width: 1800
+        format: price
+      - name: diffFee
+        display: 差价
+        width: 1800
+      - name: actualPayFee
+        display: 实收货款
+        width: 1800
+        format: price
+      - name: gatewayCommission
+        display: 支付平台佣金
+        width: 1800
+        format: price
+      - name: platformCommission
+        display: 平台佣金
+        width: 1800
+        format: price
+      - name: sellerReceivableFee
+        display: 商家应收
+        width: 1800
+        format: price

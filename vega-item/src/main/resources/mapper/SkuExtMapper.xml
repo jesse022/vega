@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ~ Copyright (c) 2016 杭州端点网络科技有限公司 -->
+
+<mapper namespace="Sku">
+
+    <update id="batchUpdateStockByShopIdAndId"  parameterType="list">
+        update
+        <include refid="tb"/>
+        <set>
+            stock_quantity = (
+            CASE
+            <foreach collection="list" open="" separator="" close="" item="sku">
+                WHEN shop_id = #{sku.shopId} and id = #{sku.id} THEN #{sku.stockQuantity}
+            </foreach>
+            END),
+
+            updated_at=now()
+        </set>
+        where shop_id in
+        <foreach collection="list" open="(" separator="," close=")" item="sku">
+            #{sku.shopId}
+        </foreach> and id in
+        <foreach collection="list" open="(" separator="," close=")" item="sku">
+            #{sku.id}
+        </foreach>
+
+
+    </update>
+
+
+    <select id="findByOuterSkuIds" parameterType="list" resultMap="SkuMap">
+        select id,<include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        where outer_sku_id in
+        <foreach collection="list" open="(" separator="," close=")" item="outerSkuId">
+            #{outerSkuId}
+        </foreach>
+    </select>
+
+    <!--获取店铺所有已冻结的商品-->
+    <select id="findFrozenItemsByShopId" parameterType="map" resultMap="SkuMap">
+        SELECT
+        id , <include refid="cols_exclude_id"/>
+        FROM <include refid="tb" />
+        WHERE status = -2 and shop_id =#{shopId}
+    </select>
+
+    <!--获取特定状态的所有商品-->
+    <select id="findSpeciallyStatusSkus" parameterType="map" resultMap="SkuMap">
+        SELECT
+        id , <include refid="cols_exclude_id"/>
+        FROM <include refid="tb" />
+        WHERE status = #{status}
+    </select>
+
+    <!--根据商品Ids查询所有SKU信息(包括已经删除的),友云采对接用到-->
+    <select id="findAllByItemIds" parameterType="list" resultMap="SkuMap">
+        SELECT
+        <include refid="cols_all"/>
+        FROM
+        <include refid="tb"/>
+        WHERE item_id IN
+        <foreach item="itemId" collection="list" open="(" separator="," close=")">
+            #{itemId}
+        </foreach>
+    </select>
+
+    <!--导出所有上架商品散客价/供货价信息(item_id:商品ID,name:商品名称,specification:规格,id:SKUID,sku_code:供货价,price:散客价,Image:单位)-->
+    <select id="findAllSkuWithPrice" parameterType="map" resultMap="SkuMap">
+        select DISTINCT  b.id as item_id,b.name as name,substring_index(substring_index(a.attrs_json,'":"',-1),'"',1) as specification,
+        a.id as id,a.`price` as sku_code,c.`price` as price , SUBSTRING(b.extra_json, 10, 1) as image
+        from parana_skus a,parana_items b,vega_shop_skus c where a.`item_id`=b.id and c.`sku_id`=a.id
+        and a.`status`= 1 and c.shop_id= 0 and b.status=1
+    </select>
+
+    <update id="batchUpdateOuterSkuId"  parameterType="list">
+        update
+        <include refid="tb"/>
+        <set>
+            outer_sku_id = (
+            CASE
+            <foreach collection="list" open="" separator="" close="" item="sku">
+                WHEN id = #{sku.id} THEN #{sku.outerSkuId}
+            </foreach>
+            END),
+
+            updated_at=now()
+        </set>
+        where id in
+        <foreach collection="list" open="(" separator="," close=")" item="sku">
+            #{sku.id}
+        </foreach>
+
+
+    </update>
+
+    <!-- 批量逻辑删除商品|
+         并更新outer_sku_id,后面加当前时间戳 -->
+    <update id="batchDeleteByItemIds" parameterType="list">
+        UPDATE
+        <include refid="tb"/>
+        SET status = -3,
+        outer_sku_id=CONCAT(outer_sku_id,date_format(now(),'%Y%m%d%h%i%s')),
+        updated_at = now()
+        WHERE item_id IN
+        <foreach item="itemId" collection="list"
+                 open="(" separator="," close=")">
+            #{itemId}
+        </foreach>
+        and `status`!=-3
+    </update>
+
+    <!--供应商修改冻结状态商品的供货价格,并把商品状态设置成指定状态-->
+    <update id="updateSellerPriceById"  parameterType="map">
+        update
+        <include refid="tb"/>
+        <set>
+            <if test="price != null">price = #{price},</if>
+            <if test="status != null">status = #{status},</if>
+            updated_at=now()
+        </set>
+        where id=#{id} and status = -2 and shop_id =#{shopId}
+    </update>
+
+    <!--查询SKU商品同步信息,未同步:syncStatus is not null; 所有: syncStatus is null-->
+    <select id="pagingBySkuSync" parameterType="list" resultMap="SkuMap">
+        select t1.*
+        from <include refid="tb"/> t1 left join vega_item_sync t2 on t1.id = t2.sync_id and t2.channel = #{channel} and t2.type = #{type}
+        where 1 = 1
+        <if test="status != null">and t1.status = #{status}</if>
+        <if test="syncStatus != null">and t2.sync_id is null</if>
+        order by t1.id desc limit #{offset},#{limit}
+    </select>
+
+    <select id="countBySkuSync" parameterType="list" resultType="long">
+        select count(1)
+        from <include refid="tb"/> t1 left join vega_item_sync t2 on t1.id = t2.sync_id and t2.channel = #{channel} and t2.type = #{type}
+        where 1 = 1
+        <if test="status != null">and t1.status = #{status}</if>
+        <if test="syncStatus != null">and t2.sync_id is null</if>
+    </select>
+
+</mapper>

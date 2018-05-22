@@ -1,0 +1,112 @@
+# 短信相关配置模板
+msg.template.list:
+  - key : repayment.credit
+    title: 运营通知经销商还信用额度
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_14226350",
+        "smsParam":{
+          "tradeNo":"{{tradeNo}}"
+        }
+      }
+  - key : repayment.user.credit
+    title: 经销商通知专属会员还信用额度
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_77125021",
+        "smsParam":{
+          "tradeNo":"{{tradeNo}}"
+        }
+      }
+  - key : already.repayment.credit
+    title: 通知经销商已操作还信用额度
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_16695620",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.seller.cancel
+    title: 商家取消订单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15140142",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.dispatcher
+    title: 审核通过并派单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15075249",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.dispatcher.receive
+    title: 审核通过并接单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15105161",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.dispatcher.reject
+    title: 拒绝接单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15130199",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.checked
+    title: 订单审核通过
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15105161",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.reject
+    title: 订单被拒绝
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15130199",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.agree.refund
+    title: 商家同意退款
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15110171",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.reject.refund
+    title: 商家拒绝退款
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15165001",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }

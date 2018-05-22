@@ -1,0 +1,394 @@
+spring:
+  application:
+    name: web
+  messages:
+    basename: vega_messages,messages,parana_store_messages
+
+logging:
+  file: ${user.home}/logs/vega/admin.log
+  level.*: INFO
+  level.io.terminus: DEBUG
+
+server:
+  context-path: /
+  port: 8090
+
+#访问域名
+web.domain: http://${DOMAIN}
+
+pay:
+  debug: true
+  channel:
+    credit-pay: enable
+
+session:
+  cookie-domain: vega.dev
+  cookie-context-path: /
+  cookie-name: msid
+  cookie-max-age: 1800
+  source: redis
+  serialize-type: json
+  redis-host: 127.0.0.1
+  redis-port: 6379
+  redis-index: 0
+  redis-cluster: false
+  redis-test-on-borrow: true
+  redis-max-total: 10
+  redis-max-idle: 0
+  redis-prefix: afsession
+
+rpc.mode: true
+
+rpc.dubbo:
+  module: vega-admin
+
+express.100.key: ~~removed~~~
+#支付超时时间 4天:60*24*4 = 5760
+order.auto.cancel.in.minutes: 5760
+
+#确认收货超时时间  30天:60*24*30=43200
+order.auto.confirm.in.minutes: 43200
+
+spring.profiles.active: dev
+
+# 短信配置
+msg:
+  current:
+    smsService: aliSmsService
+  alidayu:
+    appKey: 23439463
+    appSecret: 5a8bbf75d4b87462ab15b033624ce910
+
+#mock支付
+pay.mockpay.token:
+  notifyUrl: http://sanlux.dithub.com/api/order/paid
+  returnUrl: http://sanlux.dithub.com/buyer/pay-success
+  refundNotifyUrl: http://sanlux.dithub.com/api/vega/refund/notify
+
+pay.notifyUrl: http://www.jcfor.com/api/order/paid
+pay.returnUrl: http://www.jcfor.com/buyer/pay-success
+mobile.pay.returnUrl: http://m.jcfor.com/buyer/pay-success
+pay.refundNotifyUrl: http://www.jcfor.com/api/vega/refund/notify
+
+# 支付宝PC支付
+pay.alipay.pc.token:
+  notifyUrl: ${pay.notifyUrl}
+  returnUrl: ${pay.returnUrl}
+  refundNotifyUrl: ${pay.refundNotifyUrl}
+pay.alipay.pc.account.list:
+  - accountNo: default
+    accountName: default app account
+    pid: 2088621221587341  #pid
+    account: 2243600337@qq.com # email
+    md5Key: mpg9kjuupzd900pbl070pvyy6de74ahd  #key
+
+
+#支付宝WAP支付
+pay.alipay.wap.token:
+  notifyUrl: ${pay.notifyUrl}
+  returnUrl: ${mobile.pay.returnUrl}
+  refundNotifyUrl: ${pay.refundNotifyUrl}
+pay.alipay.wap.account.list:
+  - accountNo: default
+    accountName: default app account
+    pid: 2088621221587341
+    account: 2243600337@qq.com # email
+    md5Key: mpg9kjuupzd900pbl070pvyy6de74ahd
+
+#支付宝APP支付
+pay.alipay.app.token:
+  notifyUrl: ${pay.notifyUrl}
+  refundNotifyUrl: ${pay.refundNotifyUrl}
+  md5Key: mpg9kjuupzd900pbl070pvyy6de74ahd
+pay.alipay.app.account.list:
+  - accountNo: default
+    accountName: default app account
+    pid: 2088621221587341
+    account: 2243600337@qq.com # email
+    md5Key: mpg9kjuupzd900pbl070pvyy6de74ahd
+    rsaPriKey: MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAM7QDHagWOkIdgbRD4YP/gpddys4dMYeiQVWJ0G5R65NrpGJT2rUZ7wwzI3+xgIDqmyd/ltxclNLIJp2c2itM6GA5Re5dHMX7Y7xQWXMeencETsyV3PhpvPWkiRkKziOA/+zbOdqGEnBkIuPdoeqFlLrv2iCSJm/QdTmN8xEJN63AgMBAAECgYEAvnG7aGnUNhOCjFhsESoc5/KV0IkWj3KC/xUM5Wr25T3HqWFmbpvWQug1FfUs5aH2iDsdhZt8idM+3L6DHDuStFepjcpU2tt2MxsuFSrFA5Gd5FzPwcoFv9kd73g/M9m8xZAjcuZFaWb+EWuO+zok1P1nv4afuirPwK8eUNHY7+ECQQD21QfggYcWK3Ps2N4/y5gegK3M7442LPSf5hnGFPomaXqYPoXC2rUqGltt5POALsP+v0O9JAtl+VjEXGJ6keU5AkEA1n5/mN4hphx7ROFn5IfGmCLfjyVWvlI1T7Vyk+ly2zgCLfxOLx3RfKnYKepBzmXEhGiZ7AKtPHST25125xlTbwJAByvJPsyEkDBS/d6PFmtjz/8NDZcoGorT0JFuzkJtwg/ub93hJPgVq1N4tIiiSmcRaqVD4orZiezkl0/XzJfQgQJBANKPZZTcYq3dgckReVqnSvYoLcwo/Gli7ECuP6ch4YWACuu3pcys+evmE3S6KRWDY5IT2R4NVqBlVIyfnIyqmPMCQQCKqivF/aJzodbw9aaY07kWoGiTrYPMXETk2T/87cxf0lnZ/iN4k3LNAMsmaLS47E9JJslGXLoNJOmgXY+6nFlF
+    rsaPubKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB
+
+pay.allinpay.pc.token:
+  key: 1234567890
+  merchantId: 119115711703002
+  certPath:  /TLCert.cer
+
+pay.allinpay.wap.token:
+  key: 1234567890
+  merchantId: 119115711703002
+  certPath:  /TLCert.cer
+
+
+pay.cron.trans.allinpay.pc: 0 0 7 * * ?
+pay.cron.trans.allinpay.pc.enable: true
+
+
+trade.listener.enable: false
+
+# 结算配置
+# MockpayTransJob
+pay.job.trans.mockpay.enable: true
+pay.cron.test.trans.mockpay: 0 * * * * *
+
+# SettleServiceAutoConfig
+settle.seller.pay.gateway.commission.unrefund: true
+
+settle.controller.enable: true
+settle.listener.enable: false
+settle.job.trans.enable: true
+#settle.job.summary.enable: false
+settle.service.enable: true
+
+#settle.job.summary.enable: true
+settle.commission.rate.default: 0
+settle.mockpay.commission.rate: 10
+
+#TestSummaryJob (test, dev)
+vega.settle.cron.test.summary.channel: 0 * * * * *
+vega.settle.cron.test.summary.platform: 0 * * * * *
+vega.settle.cron.test.summary.seller: 0 * * * * *
+
+#ProductSummaryJob
+#vega.settle.cron.prod.summary.channel: 0 * * * * *
+#vega.settle.cron.prod.summary.platform: 0 * * * * *
+#vega.settle.cron.prod.summary.seller: 0 * * * * *
+
+vega.settle.listener.enable: true
+pay.cron.test.trans.credit-pay: 0 * * * * ?
+vega.settle.job.summary.enable: true
+pay.credit-pay.commission.rate: 0
+
+#招商银行直联系统URL配置
+direct.pay.url: "http://122.224.57.20:8080"
+#招商银行直联系统转账配置
+direct.pay.params.BUSCOD: "N02030"
+direct.pay.params.BUSMOD: "00002"
+direct.pay.params.CCYNBR: "10"
+direct.pay.params.STLCHN: "N"
+direct.pay.params.NUSAGE: "转账"
+direct.pay.params.BUSNAR: "转账"
+direct.pay.params.FUNNAM: "DCPAYREQ"
+direct.pay.params.DATTYP: 2
+direct.pay.params.LGNNAM: "金敏2"
+direct.pay.params.DBTACC: "575903646510101"
+direct.pay.params.DBTBBK: "57"
+
+#招商银行直联系统查询配置
+direct.pay.query.FUNNAM: "GetPaymentInfo"
+direct.pay.query.DATTYP: 2
+direct.pay.query.LGNNAM: "金敏2"
+direct.pay.query.DATFLG: "B"
+
+
+
+#微信扫码支付(Native支付)
+pay.wechatpay.qr.token:
+  notifyUrl: ${pay.notifyUrl}
+  returnUrl: ${pay.returnUrl}
+  refundNotifyUrl: ${pay.refundNotifyUrl}
+  caFilePath: /rootca.pem
+  qrPayViewUrl: http://www.jcfor.com/api/pay/qr/view
+pay.wechatpay.qr.account.list:
+  - accountNo: default
+    accountName: default app account
+    mchId: 1444294402 # 微信支付商户号
+    appId: wx406be7d36ec600e7
+    secret: 71149372803cbb4faf58c69a13211cfa
+    partnerKey: sanlux002224SANLUX002224zjbZJB11
+    certFilePath: /apiclient_cert.p12
+#pay.job.trans.wechatpay.qr.enable: true
+
+#微信JSAPI支付(公众号支付)
+pay.wechatpay.jsapi.token:
+  notifyUrl: ${pay.notifyUrl}
+  returnUrl: ${pay.returnUrl}
+  refundNotifyUrl: ${pay.refundNotifyUrl}
+  caFilePath: /rootca.pem
+  appId: wx406be7d36ec600e7
+  secret: 71149372803cbb4faf58c69a13211cfa
+pay.wechatpay.jsapi.account.list:
+  - accountNo: default
+    accountName: default app account
+    mchId: 1444294402
+    appId: wx406be7d36ec600e7
+    secret: 71149372803cbb4faf58c69a13211cfa
+    partnerKey: sanlux002224SANLUX002224zjbZJB11
+    certFilePath: /apiclient_cert.p12
+
+## 微信app
+pay.wechatpay.app.token:
+  notifyUrl: ${pay.notifyUrl}
+  returnUrl: ${pay.returnUrl}
+  refundNotifyUrl: ${pay.refundNotifyUrl}
+  caFilePath: /rootca_app.pem
+pay.wechatpay.app.account.list:
+  - accountNo: default
+    accountName: default app account
+    mchId: 1447081202
+    appId: wxd6c42c31f5cd501a
+    secret: a8dd9f8131ccbf8d7bbf1a6ea48fc591
+    partnerKey: sanlux002224SANLUX00222zjbZJB265
+    certFilePath: /apiclient_cert_app.p12
+
+wechat.redirect.url: http://m.sanlux.dithub.com/trade/wechat_pay_auth_login
+
+# 仓储
+vega.store.corn.job.enable: true
+order.storage.dealer.sync.leave.cron: 0 * * * * ? # 出库单状态同步 (二级经销商购买)
+order.storage.buyer.sync.leave.cron: 0 * * * * *? # 出库单状态同步 (普通用户购买)
+order.storage.dealer.sync.entry.cron: 0 0 * * * ? # 入库单状态同步 (二级经销商退货 == 确认收货)
+order.storage.buyer.sync.entry.cron: 0 0 * * * ? # 入库单状态同步 (普通用户退货 == 确认收货), 一小时一次
+order.storage.first-dealer.sync.entry.cron: 0 0 * * * ? # 入库单状态同步 (一级经销商进货 == 确认收货)
+
+first-dealer.stock.sync.job.enable: true
+first-dealer.stock.sync.cron: 0 0 12,17,22 * * ? # 同步一级经销商库存
+
+# parana-core中的job
+enable.order.auto.cancel.job: false
+
+# parana4.5+ settle
+settle.job.detail.enable: false
+settle.cron.test.payment: 0 * * * * *
+settle.cron.test.refund: 0 * * * * *
+
+settle.job.summary.enable: false
+settle.cron.test.summary.channel: 0 * * * * *
+settle.cron.test.summary.platform: 0 * * * * *
+settle.cron.test.summary.seller: 0 * * * * *
+
+vega.settle.job.detail.enable: true
+vega.settle.cron.test.refund: 0 * * * * *
+
+# 支付宝对账job
+pay.job.trans.test.enable: true
+pay.job.trans.alipay.pc.enable: true
+pay.job.trans.alipay.app.enable: false
+pay.job.trans.alipay.wap.enable: false
+
+# 微信支付对账job
+pay.job.trans.wechatpay.app.enable: true
+pay.job.trans.wechatpay.jsapi.enable: true
+pay.job.trans.wechatpay.qr.enable: true
+
+
+#快递鸟配置信息
+kdNiao.EBusinessID: 1267177
+kdNiao.AppKey: f89790e1-9182-40d9-8321-ab6ddca94b21
+kdNiao.ReqURL: http://api.kdniao.cc/Ebusiness/EbusinessOrderHandle.aspx
+
+# 短信相关配置模板开始
+# 短信相关配置模板
+msg.template.list:
+  - key : repayment.credit
+    title: 运营通知经销商还信用额度
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_14226350",
+        "smsParam":{
+          "tradeNo":"{{tradeNo}}"
+        }
+      }
+  - key : repayment.user.credit
+    title: 经销商通知专属会员还信用额度
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_77125021",
+        "smsParam":{
+          "tradeNo":"{{tradeNo}}"
+        }
+      }
+  - key : already.repayment.credit
+    title: 通知经销商已操作还信用额度
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_16695620",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.seller.cancel
+    title: 商家取消订单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15140142",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.dispatcher
+    title: 审核通过并派单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15075249",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.dispatcher.receive
+    title: 审核通过并接单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15105161",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.dispatcher.reject
+    title: 拒绝接单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15130199",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.checked
+    title: 订单审核通过
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15105161",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.reject
+    title: 订单被拒绝
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15130199",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.agree.refund
+    title: 商家同意退款
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15110171",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.reject.refund
+    title: 商家拒绝退款
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15165001",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+
+# 短信相关配置模板结束

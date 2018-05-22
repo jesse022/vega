@@ -1,0 +1,44 @@
+logging:
+  level.*: ${LOG_LEVEL_ALL:"INFO"}
+  level.io.terminus: ${LOG_LEVEL_TERMINUS:"DEBUG"}
+
+session:
+  cookie-domain: ${COOKIE_DOMAIN:"vega.dev"}
+  redis-host: ${REDIS_HOST}
+  redis-port: ${REDIS_PORT}
+
+rpc.mode: true
+spring:
+  profiles:
+    include: actuator
+
+
+rpc.dubbo:
+  registry-address: ${ZK_HOST}:${ZK_PORT}
+
+
+
+mobile.pay.returnUrl: http://${M_DOMAIN}/buyer/pay-success
+
+# mock 支付
+pay.mockpay.token:
+  notifyUrl: http://${DOMAIN}/api/order/paid
+  returnUrl: http://${DOMAIN}/buyer/pay-success
+  refundNotifyUrl: http://${DOMAIN}/api/vega/refund/notify
+
+
+credit-pay:
+  pid: pid
+  key: key
+  account: account
+  notifyUrl: http://${DOMAIN}/api/order/paid
+  returnUrl: http://${DOMAIN}/buyer/pay-success
+  refundNotifyUrl: http://${DOMAIN}/api/vega/refund/notify
+  gateway: http://${DOMAIN}/api/vega/credit/pay
+  refundGateway: http://${DOMAIN}/api/vega/credit/refund
+
+pay.notifyUrl: http://${DOMAIN}/api/order/paid
+pay.returnUrl: http://${DOMAIN}/buyer/pay-success
+pay.refundNotifyUrl: http://${DOMAIN}/api/vega/refund/notify
+pay.wechatpay.qr.token.qrPayViewUrl: http://${DOMAIN}/api/pay/qr/view
+wechat.redirect.url: http://${M_DOMAIN}/trade/wechat_pay_auth_login

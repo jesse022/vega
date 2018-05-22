@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ~ Copyright (c) 2016 杭州端点网络科技有限公司 -->
+
+<mapper namespace="Item">
+
+    <update id="updateImageByCategoryIdAndShopId" parameterType="map">
+        UPDATE
+        <include refid="tb"/>
+        <set>
+            <if test="mainImage != null">main_image = #{mainImage},</if>
+
+            updated_at=now()
+        </set>
+        WHERE category_id = #{categoryId} and shop_id = #{shopId} and status != -3
+    </update>
+
+    <select id="findItemIdsByCategoryIdAndShopId" parameterType="map"  resultType="long" >
+        SELECT
+        id
+        FROM <include refid="tb" />
+        WHERE category_id = #{categoryId} and shop_id = #{shopId} and status IN
+        <foreach collection="statuses" open="(" separator="," close=")"
+                 item="status">
+            #{status}
+        </foreach>
+    </select>
+
+
+    <select id="findItemsByCategoryIds" parameterType="map" resultMap="ItemMap">
+        SELECT
+        id , <include refid="cols_exclude_id"/>
+        FROM <include refid="tb" />
+        WHERE status = 1 and category_id in
+        <foreach collection="categoryIds" open="(" separator="," close=")"
+                 item="categoryId">
+            #{categoryId}
+        </foreach>
+
+    </select>
+
+    <select id="randFindItemsByCategoryId" parameterType="map" resultMap="ItemMap">
+        SELECT
+        id , <include refid="cols_exclude_id"/>
+        FROM <include refid="tb" />
+        WHERE status = 1 and category_id = #{categoryId}
+        ORDER BY RAND() LIMIT #{limit}
+    </select>
+
+    <update id="batchUpdateItemInfoMd5"  parameterType="list">
+        update
+        <include refid="tb"/>
+        <set>
+            item_info_md5 = (
+            CASE
+            <foreach collection="list" open="" separator="" close="" item="item">
+            WHEN id = #{item.id} THEN #{item.itemInfoMd5}
+            </foreach>
+            END),
+
+            updated_at=now()
+        </set>
+        where id in
+        <foreach collection="list" open="(" separator="," close=")" item="item">
+        #{item.id}
+        </foreach> and status != -3
+
+
+    </update>
+
+    <update id="batchUpdateStockByShopIdAndId"  parameterType="list">
+        update
+        <include refid="tb"/>
+        <set>
+            stock_quantity = (
+            CASE
+            <foreach collection="list" open="" separator="" close="" item="item">
+                WHEN shop_id = #{item.shopId} and id = #{item.id} THEN #{item.stockQuantity}
+            </foreach>
+            END),
+
+            updated_at=now()
+        </set>
+        where shop_id in
+        <foreach collection="list" open="(" separator="," close=")" item="item">
+            #{item.shopId}
+        </foreach> and id in
+        <foreach collection="list" open="(" separator="," close=")" item="item">
+            #{item.id}
+        </foreach>
+
+
+    </update>
+
+    <!--供应商修改冻结状态商品的供货价格,并把商品状态设置成指定状态-->
+    <update id="updateSellerPriceById"  parameterType="map">
+        update
+        <include refid="tb"/>
+        <set>
+            <if test="highPrice != null">high_price = #{highPrice},</if>
+            <if test="lowPrice != null">low_price = #{lowPrice},</if>
+            <if test="status != null">status = #{status},</if>
+            updated_at=now()
+        </set>
+        where id=#{id} and status = -2 and shop_id =#{shopId}
+    </update>
+
+    <select id="countItemWaitCheck" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM
+        <include refid="tb"/>
+        where status=#{status}
+    </select>
+
+
+</mapper>

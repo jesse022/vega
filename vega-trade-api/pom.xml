@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>vega</artifactId>
+        <groupId>io.terminus.vega</groupId>
+        <version>1.3.RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>vega-trade-api</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.terminus.parana</groupId>
+            <artifactId>parana-trade-api</artifactId>
+            <version>${parana.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.vega</groupId>
+            <artifactId>vega-common</artifactId>
+            <version>1.3.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.vega</groupId>
+            <artifactId>vega-item-api</artifactId>
+            <version>1.3.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.parana</groupId>
+            <artifactId>parana-repo-api</artifactId>
+        </dependency>
+    </dependencies>
+</project>

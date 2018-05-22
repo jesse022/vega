@@ -1,0 +1,290 @@
+# 短信相关配置模板
+msg.template.list:
+  - key: sms.user.register.code
+    title: 用户注册
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_13256636",
+        "smsParam":{
+          "code":"{{code}}",
+          "product":"集乘网电商平台"
+        }
+      }
+  - key : sms.user.change.mobile
+    title: 修改手机号
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_13256633",
+        "smsParam":{
+          "code":"{{code}}",
+          "product":"集乘网电商平台"
+        }
+      }
+  - key : sms.user.forget.password
+    title: 找回密码
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_13256634",
+        "smsParam":{
+          "code":"{{code}}",
+          "product":"集乘网电商平台"
+        }
+      }
+  - key : recovery.credit
+    title: 经销商通知运营恢复信用额度
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15230003",
+        "smsParam":{
+          "orderId":"{{orderId}}",
+          "shopName":"{{shopName}}"
+        }
+      }
+  - key : recovery.user.credit
+    title: 专属会员通知经销商恢复信用额度
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_76430125",
+        "smsParam":{
+          "orderId":"{{orderId}}",
+          "userName":"{{userName}}"
+        }
+      }
+  - key : already.repayment.credit
+    title: 通知经销商已操作还信用额度
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_16695620",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : already.repayment.credit2
+    title: 通知经销商已操作还信用额度
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_25770264",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.create
+    title: 创建订单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_14955077",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.paid
+    title: 付款成功
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15070195",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+
+  - key : order.buyer.cancel
+    title: 买家取消订单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15130178",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.seller.cancel
+    title: 商家取消订单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15140142",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.dispatcher
+    title: 审核通过并派单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15075249",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.dispatcher.receive
+    title: 审核通过并接单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15105161",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.dispatcher.reject
+    title: 拒绝接单
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15130199",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.checked
+    title: 订单审核通过
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15105161",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.reject
+    title: 订单被拒绝
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15130199",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.apply.refund
+    title: 申请退款
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15140145",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.agree.refund
+    title: 商家同意退款
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15110171",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.reject.refund
+    title: 商家拒绝退款
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15165001",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.buyer.cancel.refund
+    title: 买家取消退款
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_16666698",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.apply.return
+    title: 申请退货退款
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15090187",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.agree.return
+    title: 商家同意退货退款
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15110188",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.reject.return
+    title: 商家拒绝退货退款
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15115162",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.buyer.cancel.return
+    title: 买家取消退货退款
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15070216",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.buyer.return
+    title: 买家退货
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15150237",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.seller.receive.return
+    title: 商家收到买家已退货货物
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15095250",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }
+  - key : order.shipped
+    title: 发货
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_78650025",
+        "smsParam":{
+          "orderId":"{{orderId}}",
+          "expressCompany":"{{expressCompany}}",
+          "shipmentSerialNo":"{{shipmentSerialNo}}"
+        }
+      }
+  - key : order.confirmed
+    title: 确认收货
+    content: >
+      {
+        "smsName":"集乘平台",
+        "smsTemplate":"SMS_15095251",
+        "smsParam":{
+          "orderId":"{{orderId}}"
+        }
+      }

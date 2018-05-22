@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2016. 杭州端点网络科技有限公司.  All rights reserved.
+  --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>vega</artifactId>
+        <groupId>io.terminus.vega</groupId>
+        <version>1.3.RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>vega-web-common</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.terminus.parana</groupId>
+            <artifactId>parana-item-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.boot</groupId>
+            <artifactId>terminus-spring-boot-starter-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.parana</groupId>
+            <artifactId>parana-web-core</artifactId>
+            <version>${parana.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.vega</groupId>
+            <artifactId>vega-user-api</artifactId>
+            <version>1.3.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.vega</groupId>
+            <artifactId>vega-item-api</artifactId>
+            <version>1.3.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.vega</groupId>
+            <artifactId>vega-pay</artifactId>
+            <version>1.3.RELEASE</version>
+        </dependency>
+
+
+        <!-- pay -->
+        <dependency>
+            <groupId>io.terminus.pay</groupId>
+            <artifactId>terminus-pay-alipay-app</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.pay</groupId>
+            <artifactId>terminus-pay-alipay-pc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.pay</groupId>
+            <artifactId>terminus-pay-alipay-wap</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.pay</groupId>
+            <artifactId>terminus-pay-wechatpay-qr</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.pay</groupId>
+            <artifactId>terminus-pay-wechatpay-app</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.pay</groupId>
+            <artifactId>terminus-pay-wechatpay-jsapi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.pay</groupId>
+            <artifactId>terminus-pay-mockpay</artifactId>
+        </dependency>
+
+
+        <!-- sms -->
+        <dependency>
+            <groupId>io.terminus.msg</groupId>
+            <artifactId>terminus-msg-sms-alidayu</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.terminus.msg</groupId>
+            <artifactId>terminus-msg-light</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.cage</groupId>
+            <artifactId>cage</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.terminus.lib</groupId>
+            <artifactId>terminus-sms</artifactId>
+            <version>${terminus-lib.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.terminus.lib</groupId>
+            <artifactId>terminus-apppush</artifactId>
+            <version>${terminus-lib.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.terminus.vega</groupId>
+            <artifactId>vega-trade-api</artifactId>
+            <version>1.3.RELEASE</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>io.terminus.vega</groupId>-->
+            <!--<artifactId>vega-trade</artifactId>-->
+            <!--<version>1.2-SNAPSHOT</version>-->
+        <!--</dependency>-->
+
+        <!-- zk -->
+        <dependency>
+            <groupId>io.terminus.zookeeper</groupId>
+            <artifactId>leader</artifactId>
+            <version>2.2.RELEASE</version>
+        </dependency>
+
+        <!-- freemarker jar -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.26-incubating</version>
+        </dependency>
+
+
+        <!-- actuator -->
+
+        <dependency>
+            <groupId>io.terminus.actuator</groupId>
+            <artifactId>terminus-actuator-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.terminus.actuator</groupId>
+                    <artifactId>terminus-actuator-mybatis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+
+</project>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ~ Copyright (c) 2016 杭州端点网络科技有限公司 -->
+
+<mapper namespace="ShopItem">
+    <resultMap id="ShopItemMap" type="ShopItem">
+        <id column="id" property="id"/>
+        <result column="shop_id" property="shopId"/>
+        <result column="item_id" property="itemId"/>
+        <result column="item_name" property="itemName"/>
+        <result column="status" property="status"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="tb">vega_shop_items</sql>
+
+    <sql id="cols_all">
+        id,<include refid="cols_exclude_id"/>
+    </sql>
+
+    <sql id="cols_exclude_id">
+        shop_id,item_id,item_name,status,created_at,updated_at
+    </sql>
+
+    <sql id="vals">
+        #{shopId},#{itemId},#{itemName},#{status},now(),now()
+    </sql>
+
+    <sql id="criteria">
+        <if test="id != null">id = #{id}</if>
+        <if test="shopId != null">and shop_id = #{shopId}</if>
+        <if test="itemId != null">and item_id = #{itemId}</if>
+        <if test="itemName != null">and item_name like concat(#{itemName},'%')</if>
+        <if test="status != null">and status = #{status}</if>
+    </sql>
+
+    <insert id="create" parameterType="ShopItem" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO<include refid="tb"/>(<include refid="cols_exclude_id"/>) VALUES(<include refid="vals"/>)
+    </insert>
+
+    <insert id="creates" parameterType="list">
+        INSERT INTO
+        <include refid="tb"/>
+        (<include refid="cols_exclude_id"/>)
+        VALUES
+        <foreach collection="list" item="i" index="index" separator=",">
+            (#{i.shopId},#{i.itemId},#{i.itemName},#{i.status},now(),now())
+        </foreach>
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        delete from <include refid="tb"/>
+        where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="ShopItem">
+        UPDATE <include refid="tb"/>
+        <set>
+            <if test="itemName != null">item_name = #{itemName},</if>
+            <if test="status != null">status = #{status},</if>
+            updated_at = now()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" parameterType="long" resultMap="ShopItemMap">
+        select id,<include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        where id = #{id}
+    </select>
+
+    <select id="findByIds" parameterType="list" resultMap="ShopItemMap">
+        select id,<include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        where id in
+        <foreach collection="list" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findByShopIdAndItemId" parameterType="map" resultMap="ShopItemMap">
+        select id,<include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        where shop_id=#{shopId} and item_id = #{itemId}
+    </select>
+
+    <select id="findByShopIdAndItemIds" parameterType="map" resultMap="ShopItemMap">
+        select id,<include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        where shop_id=#{shopId} and item_id in
+        <foreach collection="itemIds" open="(" separator="," close=")" item="itemId">
+            #{itemId}
+        </foreach>
+    </select>
+
+    <select id="count" parameterType="map" resultType="long">
+        select count(1) from <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+    </select>
+
+    <select id="paging" parameterType="map" resultMap="ShopItemMap">
+        select id,<include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+        LIMIT #{offset}, #{limit}
+    </select>
+</mapper>
